@@ -1,20 +1,25 @@
 import tkinter as tk
-from tkinter import *
+from tkinter import RIGHT,X
 import mysql.connector as sql
+
 
 #--------- fomction deplacement -----
 
 
 def centre_fenetre(window,a,b):
+    """Pour centrer les fenetres"""
     x_Left = int(window.winfo_screenwidth()/2 -a/2)
     y_Top = int(window.winfo_screenheight()/2 -b/2)
     window.geometry("{}x{}+{}+{}".format(a,b,x_Left, y_Top))
 
 def title_bar(main,largeur,couleur):
+    """Custom title bar"""
     #-------title bar ---------
     def deplacement(e):
+        """deplacement fenetre"""
         main.geometry(f'+{e.x_root}+{e.y_root}')
     def quitter(e):
+        """action bouton fermeture fenetre"""
         main.quit()
     bar_titre=tk.Frame(main, bg="black",width=30)
     bar_titre.pack(expand=1,fill=X)
@@ -25,4 +30,6 @@ def title_bar(main,largeur,couleur):
     quit_label.pack(side=RIGHT)
     quit_label.bind("<Button-1>",quitter)
     
-    #------ connexion base de donnees
+    #------ resize ----------
+
+

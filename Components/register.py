@@ -1,35 +1,34 @@
-from logging import currentframe
-from tkinter import *
-from tkinter.font import Font
-from PIL import ImageTk
+from tkinter import ttk,Label,StringVar,PhotoImage,messagebox
 from ttkbootstrap import Style
-from tkinter import ttk
-from utile import *
+from utile import centre_fenetre,title_bar
 from tkcalendar import DateEntry
 import mysql.connector as sql
-from tkinter import messagebox
 
 #----- Database connection -------
-    
 def register():
-    db = sql.connect(host = "localhost", user = "root", passwd = "I001#?fff0066",database = "user")
+    """Register to database"""
+    data_base = sql.connect(host = "localhost", user = "ROOT", Crouch = "I001#?fff0066",database = "user")
+    cur = data_base.cursor()
+    nom= TXT_NOM.get()
+    prenom=TXT_PRENOM.get()
+    mail= TXT_MAIL.get()
+    mdp= TXT_NCROUCH.get()
+    daten= TXT_DATE.get_date()
+    mdp2= TXT_PASS.get()
 
-    cur = db.cursor()
-    nom= txt_nom.get()
-    prenom=txt_prenom.get()
-    mail= txt_mail.get()
-    mdp= txt_npsswd.get()
-    dateN= txt_date.get_date()
-    mpd2= txt_cnpsswd.get()
-
-    if nom=="" or prenom=="" or mail=="" or mdp=="" or dateN=="":
-        messagebox.showerror("Error","All field are mandatory")
+    if nom=="" or prenom=="" or mail=="" or mdp=="" or daten=="":
+        messagebox.showerror("Erreur","Veuillez compléter tous les champs")
+    elif mdp != mdp2:
+        messagebox.showerror("Erreur","Les entrées du mot de passe ne sont pas identiques")
     else :
-        cur.execute("INSERT INTO `personne` (`id`, `nom`, `prenom`, `email`, `dateN`, `mdp`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s');" % (nom, prenom,mail,dateN,mdp))
-        db.commit()
-        db.close()
-        messagebox.showinfo('success','successfully inserted') #if value is inserted ,it will give the message.
-
+        cur.execute("""INSERT
+                    INTO 
+                    `personne` (`id`, `nom`, `prenom`, `email`, `dateN`, `mdp`) 
+                    VALUES (NULL, %s, %s, %s, %s, %s);""",(nom,prenom,mail,mdp,daten,))
+        data_base.commit()
+        data_base.close()
+        #if value is inserted ,it will give the message.
+        messagebox.showinfo('success','successfully inserted')
     cur.close()
 
 # ------ -------------------------
@@ -37,42 +36,36 @@ def register():
 
 def Login(main):
     main.destroy()
-    global txt_nom
-    global txt_prenom
-    global txt_mail
-    global txt_npsswd
-    global txt_date
-    global txt_cnpsswd
-    global root
+    global TXT_NOM
+    global TXT_PRENOM
+    global TXT_MAIL
+    global TXT_NCROUCH
+    global TXT_DATE
+    global TXT_PASS
+    global ROOT
     style=Style(theme='flatly')
-    root=style.master
-    centre_fenetre(root,1100,600)
-    root.overrideredirect(True)
-    root.resizable(False,False)
-        
-        #--------- fomction deplacement -----
-    def deplacement(e):
-        root.geometry(f'+{e.x_root}+{e.y_root}')
-    def quitter(e):
-            root.quit()
+    ROOT=style.master
+    centre_fenetre(ROOT,1100,600)
+    ROOT.overrideredirect(True)
+    ROOT.resizable(False,False)
     #---- Background image-----
-    root.bg=PhotoImage(file="Components/images/002.png")
-    bg_image=Label(root,image=root.bg).place(x=0,y=0,relwidth=1,relheight=1)
+    ROOT.bg=PhotoImage(file="Components/images/002.png")
+    Label(ROOT,image=ROOT.bg).place(x=0,y=0,relwidth=1,relheight=1)
     #----- title bar ----------
-    title_bar(root,1100,"#0C0C0C")
+    title_bar(ROOT,1100,"#0C0C0C")
     #----- Form ---------------
-    txt_nom=ttk.Entry(root,font=("Helvetica Neue",12),width=36,textvariable=StringVar())
-    txt_nom.place(relx=0.65,rely=0.258)
-    txt_prenom=ttk.Entry(root,font=("Helvetica Neue",12),width=36,textvariable=StringVar())
-    txt_prenom.place(relx=0.65,rely=0.33)
-    txt_mail=ttk.Entry(root,font=("Helvetica Neue",12),width=36,textvariable=StringVar())
-    txt_mail.place(relx=0.65,rely=0.402)
-    txt_date=DateEntry(root,font=("Helvetica Neue",12),width=34,textvariable=StringVar())
-    txt_date.place(relx=0.65,rely=0.474)
-    txt_npsswd=ttk.Entry(root,font=("Helvetica Neue",12),width=36,textvariable=StringVar(),show="*")
-    txt_npsswd.place(relx=0.65,rely=0.546)
-    txt_cnpsswd=ttk.Entry(root,font=("Helvetica Neue",12),width=36,textvariable=StringVar(),show="*")
-    txt_cnpsswd.place(relx=0.65,rely=0.618)
+    TXT_NOM=ttk.Entry(ROOT,font=("Helvetica Neue",12),width=36,textvariable=StringVar())
+    TXT_NOM.place(relx=0.65,rely=0.258)
+    TXT_PRENOM=ttk.Entry(ROOT,font=("Helvetica Neue",12),width=36,textvariable=StringVar())
+    TXT_PRENOM.place(relx=0.65,rely=0.33)
+    TXT_MAIL=ttk.Entry(ROOT,font=("Helvetica Neue",12),width=36,textvariable=StringVar())
+    TXT_MAIL.place(relx=0.65,rely=0.402)
+    TXT_DATE=DateEntry(ROOT,font=("Helvetica Neue",12),width=34,textvariable=StringVar())
+    TXT_DATE.place(relx=0.65,rely=0.474)
+    TXT_NCROUCH=ttk.Entry(ROOT,font=("Helvetica Neue",12),width=36,textvariable=StringVar(),show="*")
+    TXT_NCROUCH.place(relx=0.65,rely=0.546)
+    TXT_PASS=ttk.Entry(ROOT,font=("Helvetica Neue",12),width=36,textvariable=StringVar(),show="*")
+    TXT_PASS.place(relx=0.65,rely=0.618)
     #------ Form Button ----------
     button_2 = ttk.Button(
     command=lambda:register(),
