@@ -1,0 +1,48 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+
+<MyTile@SmartTileWithStar>
+    size_hint_y: None
+    height: "240dp"
+
+
+MDBoxLayout:
+    orientation: "vertical"
+
+    MDToolbar:
+        title: "MDNavigationRail"
+        md_bg_color: rail.md_bg_color
+        left_action_items: [["menu", lambda x: app.rail_open()]]
+
+    MDBoxLayout:
+
+        MDNavigationRail:
+            id: rail
+            md_bg_color: get_color_from_hex("#344954")
+            color_normal: get_color_from_hex("#718089")
+            color_active: get_color_from_hex("#f3ab44")
+            use_resizeable: True
+
+            MDNavigationRailItem:
+                icon: "language-cpp"
+                text: "C++"
+
+            MDNavigationRailItem:
+                icon: "language-java"
+                text: "Java"
+
+            MDNavigationRailItem:
+                icon: "language-swift"
+                text: "Swift"
+
+        MDBoxLayout:
+            padding: "24dp"
+
+            ScrollView:
+
+                MDList:
+                    id: box
+                    cols: 3
+                    spacing: "12dp"

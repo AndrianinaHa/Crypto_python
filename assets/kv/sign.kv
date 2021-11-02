@@ -1,0 +1,275 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+Navigation:
+    Login:
+    Register:
+    MainApp:
+    OptionApp:
+    Profile:
+    Livre:
+
+
+<Login>:
+    id: login
+    name: 'login'
+    FitImage:
+        size_hint_y: 1
+        source: "../assets/images/sign.jpg"
+    MDFloatLayout:
+        MDLabel:
+            pos_hint: {"center_x": .5, "center_y": .78}
+            text: "CONNEXION"
+            halign: "center"
+            font_style: "H5"
+
+        MDLabel:
+            pos_hint: {"center_x": .5, "center_y": .7}
+            text: "Split The Sky!"
+            halign: "center"
+
+        MDTextField:
+            id: user_name
+            pos_hint: {"center_x": .5, "center_y": .61}
+            size_hint_x:.44
+            hint_text: "ex: Harena"
+            icon_left: 'account-circle'
+            normal_color: 'white'
+            max_text_length: 50
+
+        MDTextField:
+            id: user_pass
+            pos_hint: {"center_x": .5, "center_y": .49}
+            size_hint_x:.44
+            password: True
+            hint_text: 'ex: *******'
+            icon_left: 'key-variant'
+            normal_color: 'white'
+            max_text_length: 100
+
+
+    MDRoundFlatButton:
+        text: "S'inscrire"
+        color: "white"
+        pos_hint: {"center_x": .6, "center_y": .35}
+        size_hint: .15,.06
+        on_press:
+            # You can define the duration of the change
+            # and the direction of the slide
+            root.manager.transition.direction = 'left'
+            root.manager.transition.duration = 0.7
+            root.manager.current = 'register'
+    MDRoundFlatButton:
+        pos_hint: {"center_x": .4, "center_y": .35}
+        text: "Se connecter"
+        size_hint: .15,.06
+        color: "white"
+        on_press:
+            app.connecter()
+
+
+<Register>:
+    name: 'register'
+    FitImage:
+        size_hint_y: 1
+        source: "../assets/images/sign.jpg"
+    MDFloatLayout:
+        MDLabel:
+            pos_hint: {"center_x": .5, "center_y": .85}
+            text: "S'inscrire"
+            halign: "center"
+            font_style: "H4"
+
+        MDLabel:
+            pos_hint: {"center_x": .5, "center_y": .78}
+            text: "Biemvenue dans Split The Sky!"
+            halign: "center"
+
+        MDTextField:
+            id: user_pseudo
+            pos_hint: {"center_x": .5, "center_y": .7}
+            size_hint_x:.44
+            icon_left: 'account-circle'
+            hint_text: "Nom d'utilisateur"
+            helper_text: "ex: Andrianina1"
+            helper_text_mode: "on_focus"
+            max_text_length: 50
+
+        MDTextField:
+            id: user_mail
+            pos_hint: {"center_x": .5, "center_y": .6}
+            size_hint_x:.44
+            icon_left: 'email'
+            hint_text: "Adresse e-mail"
+            helper_text: "ex: Andrianina1@gmail.com"
+            helper_text_mode: "on_focus"
+            max_text_length: 150
+
+        MDTextField:
+            id: user_crouch
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint_x:.44
+            icon_left: 'key-outline'
+            hint_text: "Mot de passe"
+            password: True
+            helper_text: "Au moins une lettre en majuscule, 8 caractères et des chiffres"
+            helper_text_mode: "on_focus"
+            max_text_length: 100
+
+        MDTextField:
+            id: user_crouch1
+            pos_hint: {"center_x": .5, "center_y": .4}
+            size_hint_x:.44
+            icon_left: 'key-outline'
+            hint_text: "Confirmer le mot de passe"
+            password: True
+            helper_text_mode: "on_focus"
+            max_text_length: 100
+
+    MDRoundFlatButton:
+        pos_hint: {"center_x": .6, "center_y": .25}
+        text: "Confirmer"
+        size_hint: .15,.06
+        color: "white"
+        on_press:
+            app.enregistrer()
+
+    MDRoundFlatButton:
+        pos_hint: {"center_x": .4, "center_y": .25}
+        text: "Revenir"
+        size_hint: .15,.06
+        color: "white"
+        on_press:
+            # You can define the duration of the change
+            # and the direction of the slide
+            root.manager.transition.direction = 'right'
+            root.manager.transition.duration = 0.7
+            root.manager.current = 'login'
+
+
+<MainApp>:
+    id: principale
+    name: 'principale'
+
+    MDBottomNavigation:
+        panel_color: .2, .2, .2, 1
+        size_hint_x: 0.75
+        pos_hint:{"center_x": .5}
+        MDBottomNavigationItem:
+            name: 'rechercher'
+            text:"Rechercher"
+            icon: 'home-search'
+
+            MDBoxLayout:
+
+            ScrollView:
+                id: scroll_main
+                pos_hint:{"center_y": .3}
+                MDList:
+                    id: scroll
+                    cols: 2
+                    spacing: "10dp"
+                    on_touch_down: app.lire()
+
+
+        MDBottomNavigationItem:
+            name: 'Accueil'
+            text: "Accueil"
+            icon: 'home-circle-outline'
+            MDLabel:
+                text: 'I programming of C++'
+                halign: 'center'
+
+        MDBottomNavigationItem:
+            name: 'favorites'
+            text: 'Favoris'
+            icon: 'cards-heart-outline'
+
+            MDLabel:
+                text: 'JS'
+                halign: 'center'
+
+    MDFloatingActionButtonSpeedDial:
+        data: root.data
+        root_button_anim: True
+        callback: app.callback
+
+    MDTextField:
+        id: cherche
+        size_hint_x:.55
+        icon_left: "magnify"
+        pos_hint: {"center_x": .5,"center_y": .95}
+        hint_text: "Rechercher"
+        on_text_validate: root.search_regular()
+
+<OptionApp>:
+    id:option
+    name:'options'
+
+<Profile>:
+    id:profile
+    name:'profile'
+
+    MDCard:
+        size_hint: None, None
+        size: "180dp", "180dp"
+        pos_hint: {"center_x": .5, "center_y": .8}
+        radius: [100]
+        FitImage:
+            size_hint_y: 1
+            source: "../assets/images/1.jpg"
+            radius: [100]
+
+    MDRoundFlatButton:
+        text: "Se deconnecter"
+        size_hint: .15,.06
+        text_color: 0, 1, 0, 1
+        pos_hint: {"center_x": .8, "center_y": .3}
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_x": .505, "center_y": .55}
+
+        MDLabel:
+            id: email
+            halign: "center"
+
+    MDLabel:
+        text: "Informations utilisateur"
+        halign: "center"
+        pos_hint: {"center_x": .2, "center_y": .5}
+
+    MDTextField:
+        id: user_name
+        size_hint_x:.3
+        icon_left: "account"
+        pos_hint: {"center_x": .2, "center_y": .4}
+        hint_text: ""
+
+    MDTextField:
+        id: user_prenom
+        size_hint_x:.3
+        icon_left: "account"
+        pos_hint: {"center_x": .2, "center_y": .3}
+        hint_text: ""
+
+    MDTextField:
+        id: mail
+        size_hint_x:.3
+        icon_left: "email"
+        pos_hint: {"center_x": .2, "center_y": .2}
+
+    MDRoundFlatButton:
+        text: "Confirmer les changements"
+        size_hint: .25,.06
+        text_color: 0, 1, 0, 1
+        pos_hint: {"center_x": .2, "center_y": .1}
+        on_press: root.confirmer()
+
+<Livre>:
+    name:'livre'
+    id: livre
+    MDBoxLayout:
+        orientation: "vertical"
+        MDLabel:
+            id: livret
+

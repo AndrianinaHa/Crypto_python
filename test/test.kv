@@ -1,0 +1,120 @@
+Navigation:
+    MainApp:
+    OptionApp:
+    Profile:
+
+<MainApp>:
+    id: principale
+    name: 'principale'
+
+    MDFloatingActionButtonSpeedDial:
+        data: root.data
+        root_button_anim: True
+        callback: app.callback
+
+    MDBottomNavigation:
+        panel_color: .085, 1, .123, 1
+        size_hint_x: 0.75
+        pos_hint:{"center_x": .5}
+        MDBottomNavigationItem:
+            name: 'rechercher'
+            text:"Rechercher"
+            icon: 'home-search'
+
+            MDTextField:
+                id: cherche
+                size_hint_x:.55
+                icon_left: "magnify"
+                pos_hint: {"center_x": .5,"center_y": .95}
+                hint_text: "Rechercher"
+                on_text_validate: root.search_regular()
+
+            MDBoxLayout:
+
+                ScrollView:
+                    id: scroll_main
+                    MDList:
+                        id: scroll
+                        cols: 2
+                        spacing: "20dp"
+
+        MDBottomNavigationItem:
+            name: 'Accueil'
+            text: "Accueil"
+            icon: 'home-circle-outline'
+            MDLabel:
+                text: 'I programming of C++'
+                halign: 'center'
+
+        MDBottomNavigationItem:
+            name: 'favorites'
+            text: 'Favoris'
+            icon: 'cards-heart-outline'
+
+            MDLabel:
+                text: 'JS'
+                halign: 'center'
+
+<OptionApp>:
+    id:option
+    name:'options'
+
+<Profile>:
+    id:profile
+    name:'profile'
+
+    MDCard:
+        size_hint: None, None
+        size: "180dp", "180dp"
+        pos_hint: {"center_x": .5, "center_y": .8}
+        radius: [100]
+        FitImage:
+            size_hint_y: 1
+            source: "../assets/images/1.jpg"
+            radius: [100]
+
+    MDRoundFlatButton:
+        text: "Se deconnecter"
+        size_hint: .15,.06
+        text_color: 0, 1, 0, 1
+        pos_hint: {"center_x": .8, "center_y": .3}
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_x": .505, "center_y": .55}
+
+        MDLabel:
+            id: email
+            halign: "center"
+
+    MDLabel:
+        text: "Informations utilisateur"
+        halign: "center"
+        pos_hint: {"center_x": .2, "center_y": .5}
+
+    MDTextField:
+        id: user_name
+        size_hint_x:.3
+        icon_left: "account"
+        pos_hint: {"center_x": .2, "center_y": .4}
+        hint_text: ""
+
+    MDTextField:
+        id: user_prenom
+        size_hint_x:.3
+        icon_left: "account"
+        pos_hint: {"center_x": .2, "center_y": .3}
+        hint_text: ""
+
+    MDTextField:
+        id: mail
+        size_hint_x:.3
+        icon_left: "email"
+        pos_hint: {"center_x": .2, "center_y": .2}
+
+    MDRoundFlatButton:
+        text: "Confirmer les changements"
+        size_hint: .25,.06
+        text_color: 0, 1, 0, 1
+        pos_hint: {"center_x": .2, "center_y": .1}
+        on_press: root.confirmer()
